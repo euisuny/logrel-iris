@@ -38,39 +38,46 @@
 
 
 \section{Ideas / Brainstorming}
-Curiosities related to Iris that may or may not lead to a 
+Curiosities related to Iris that may or may not lead to a
 project.
-\begin{enumerate} 
+\begin{enumerate}
     \item Pi-calculus encoding in Iris \\
     - Possible direction: Use session-typed $\pi$-calculus encoding in Actris
-    and see if it's compatible with the syntactic translation of game 
+    and see if it's compatible with the syntactic translation of game
     semantics proposed by Yoshida et al. It might be interesting to see
-    if we can translate properties that are "game semantic" onto this 
+    if we can translate properties that are "game semantic" onto this
     framework.
-    For instance, we could imagine stating invariants that are on the game 
-    semantic language proposed in Yoshida et al. and providing a syntactic 
-    translation into the $pi$-calculus terms. We would be able to write 
+    For instance, we could imagine stating invariants that are on the game
+    semantic language proposed in Yoshida et al. and providing a syntactic
+    translation into the $pi$-calculus terms. We would be able to write
     "high-level" specifications in the game semantic language, and then
     the proofs will be in the "low-level" $\pi$-calculus framework, which
     are easier to reason about?\\
     Game semantics paper link : \url{https://arxiv.org/pdf/2011.05248.pdf}\\
     Actris link : \url{https://dl.acm.org/doi/10.1145/3371074}
     \item CBPV $\lambda$-calculus in Iris, leveraging logical relations to
-    define contextual equivalence in this language. This work is already 
+    define contextual equivalence in this language. This work is already
     formalized in Coq by C. Rizkallah et al., and would be nice because
     we can ask Steve on technical details if we're confused about anything.\\
     Paper link:
     \url{https://www.cse.unsw.edu.au/~crizkallah/publications/cbpv-eq.pdf}
     \item Complexity analysis of parallel algorithms using Iris.
-    One thing that would be fairly small that we could analyze is parallel 
+    One thing that would be fairly small that we could analyze is parallel
     quicksort (\url{http://www.cs.cmu.edu/afs/cs/academic/class/15210-f15/www/tapp.html#_quicksort}).
+    \item Equi-recursive types: most formalizations done in Iris use
+      iso-recursive types, with the exception of the paper on session types,
+      which uses the Iris fixpoint operator.
+      \url{https://iris-project.org/pdfs/2020-semantic-sessions-submission.pdf}.
+      Maybe we can modify another language with iso-recursive types to use
+      coinductive equi-recursive types instead.
+
 
     ==== More open-ended questions ====
     \item Quantum programming in Iris?
     \item Functional/proof pearl ideas in Iris?
     \item OK, higher-order stores are neat, but are there other higher-order
     data structures that we might care about? Does Iris give us any
-    advantages here? 
+    advantages here?
 \end{enumerate}
 
 
