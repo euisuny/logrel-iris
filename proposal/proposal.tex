@@ -28,6 +28,7 @@
 \usepackage{stackengine}
 \usepackage{scalerel}
 \usepackage{xcolor}
+\bibliographystyle{ACM-Reference-Format}
 
 \begin{document}
 \title{CIS 670 Project Proposal}
@@ -37,50 +38,42 @@
 \maketitle{}
 
 
-\section{Ideas / Brainstorming}
-Curiosities related to Iris that may or may not lead to a
-project.
-\begin{enumerate}
-    \item Pi-calculus encoding in Iris \\
-    - Possible direction: Use session-typed $\pi$-calculus encoding in Actris
-    and see if it's compatible with the syntactic translation of game
-    semantics proposed by Yoshida et al. It might be interesting to see
-    if we can translate properties that are "game semantic" onto this
-    framework.
-    For instance, we could imagine stating invariants that are on the game
-    semantic language proposed in Yoshida et al. and providing a syntactic
-    translation into the $pi$-calculus terms. We would be able to write
-    "high-level" specifications in the game semantic language, and then
-    the proofs will be in the "low-level" $\pi$-calculus framework, which
-    are easier to reason about?\\
-    Game semantics paper link : \url{https://arxiv.org/pdf/2011.05248.pdf}\\
-    Actris link : \url{https://dl.acm.org/doi/10.1145/3371074}
-    \item CBPV $\lambda$-calculus in Iris, leveraging logical relations to
-    define contextual equivalence in this language. This work is already
-    formalized in Coq by C. Rizkallah et al., and would be nice because
-    we can ask Steve on technical details if we're confused about anything.\\
-    Paper link:
-    \url{https://www.cse.unsw.edu.au/~crizkallah/publications/cbpv-eq.pdf}
-    \item Complexity analysis of parallel algorithms using Iris.
-    One thing that would be fairly small that we could analyze is parallel
-    quicksort (\url{http://www.cs.cmu.edu/afs/cs/academic/class/15210-f15/www/tapp.html#_quicksort}).
-    \item Equi-recursive types: most formalizations done in Iris use
-      iso-recursive types, with the exception of the paper on session types,
-      which uses the Iris fixpoint operator.
-      \url{https://iris-project.org/pdfs/2020-semantic-sessions-submission.pdf}.
-      Maybe we can modify another language with iso-recursive types to use
-      coinductive equi-recursive types instead.
+\section{Project Goal}
+In this project, we aim to encode a unary logical relation for the call-by-push-
+value (CBPV) calculus in the Iris proof framework. CBPV is a nifty calculus that
+subsumes both call-by-value (CBV) and call-by-name (CBN). The scope of this project
+will define a unary semantic typing relation on a basic CBPV calculus. The reason
+that we choose the Iris framework for this purpose is because we view this project
+as necessary groundwork for an exploration of an equational theory of a CBPV
+calculus with recursive types. 
 
+\section{Introduction} 
 
-    ==== More open-ended questions ====
-    \item Quantum programming in Iris?
-    \item Functional/proof pearl ideas in Iris?
-    \item OK, higher-order stores are neat, but are there other higher-order
-    data structures that we might care about? Does Iris give us any
-    advantages here?
-\end{enumerate}
+\textbf{Formalized Logical Relations of CBPV}
+This is primarily inspired by the pioneering work of 
+~\cite{rizkallah} of an formalized equational theory of CBPV, which formalizes the
+soundness of the equational theory with relation to an obesrvational equivalence.
+~\cite{forster}'s approach offers a slightly different proof setup: they formalize 
+contexts as first-class objects using a Kripke semantics.
+We wish to develop a formalization similar to ~\cite{forster} because the Iris
+framework offers a natural leverage to Kripke-semantic logical relations.\\
+\\
+\textbf{Iris Proof Framework}
+The Iris proof framework is a state-of-the-art tool that has a rich program logic 
+that can be used for reasoning about concurrent programs. 
+We plan to use its underlying logic, which is based on a 
+step-indexed logical relation, to define a logical relation on CBPV.
+Iris's base logic is equipped with modalities that make this definition easier,
+especially under the presence of recursive types.
+A similar approach is ~\cite{timany}'s work on defining a logical relation for 
+the state monad, where their relation induces a definition of contextual 
+equivalence on effectful computations encapsulated by the ST monad.
 
+\section{Operational Semantics of CBPV}
+In the next two sections, we will describe the operational semantics of CBPV that we wish
+to encode, and a sketch of the semantic typing relation that we wish to prove sound 
+with respect to the operational semantics.
 
-
+\bibliography{refs}
 
 \end{document}

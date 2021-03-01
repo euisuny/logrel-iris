@@ -1,0 +1,52 @@
+@InProceedings{rizkallah,
+author="Rizkallah, Christine
+and Garbuzov, Dmitri
+and Zdancewic, Steve",
+editor="Avigad, Jeremy
+and Mahboubi, Assia",
+title="A Formal Equational Theory for Call-By-Push-Value",
+booktitle="Interactive Theorem Proving",
+year="2018",
+publisher="Springer International Publishing",
+address="Cham",
+pages="523--541",
+abstract="Establishing that two programs are contextually equivalent is hard, yet essential for reasoning about semantics preserving program transformations such as compiler optimizations. We adapt Lassen's normal form bisimulations technique to establish the soundness of equational theories for both an untyped call-by-value {\$}{\$}{\backslash}lambda {\$}{\$}-calculus and a variant of Levy's call-by-push-value language. We demonstrate that our equational theory significantly simplifies the verification of optimizations.",
+isbn="978-3-319-94821-8"
+},
+
+@inproceedings{forster,
+author = {Forster, Yannick and Sch\"{a}fer, Steven and Spies, Simon and Stark, Kathrin},
+title = {Call-by-Push-Value in Coq: Operational, Equational, and Denotational Theory},
+year = {2019},
+isbn = {9781450362221},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3293880.3294097},
+doi = {10.1145/3293880.3294097},
+abstract = {Call-by-push-value (CBPV) is an idealised calculus for functional and imperative programming, introduced as a subsuming paradigm for both call-by-value (CBV) and call-by-name (CBN). We formalise weak and strong operational semantics for (effect-free) CBPV, define its equational theory, and verify adequacy for the standard set/algebra denotational semantics. Furthermore, we prove normalisation of the standard reduction, confluence of strong reduction, strong normalisation using Kripke logical relations, and soundness of the equational theory using logical equivalence. We adapt and verify the known translations from CBV and CBN into CBPV for strong reduction. This yields, for instance, proofs of strong normalisation and confluence for the full λ-calculus with sums and products. Thanks to the automation provided by Coq and the Autosubst 2 framework, there is little formalisation overhead compared to detailed paper proofs.},
+booktitle = {Proceedings of the 8th ACM SIGPLAN International Conference on Certified Programs and Proofs},
+pages = {118–131},
+numpages = {14},
+keywords = {formalisation, equational theory, type theory, denotational semantics, Coq, strong normalisation, operational semantics, Call-by-push-value},
+location = {Cascais, Portugal},
+series = {CPP 2019}
+},
+
+@article{timany,
+author = {Timany, Amin and Stefanesco, L\'{e}o and Krogh-Jespersen, Morten and Birkedal, Lars},
+title = {A Logical Relation for Monadic Encapsulation of State: Proving Contextual Equivalences in the Presence of RunST},
+year = {2017},
+issue_date = {January 2018},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {2},
+number = {POPL},
+url = {https://doi.org/10.1145/3158152},
+doi = {10.1145/3158152},
+abstract = {We present a logical relations model of a higher-order functional programming language with impredicative polymorphism, recursive types, and a Haskell-style ST monad type with runST. We use our logical relations model to show that runST provides proper encapsulation of state, by showing that effectful computations encapsulated by runST are heap independent. Furthermore, we show that contextual refinements and equivalences that are expected to hold for pure computations do indeed hold in the presence of runST. This is the first time such relational results have been proven for a language with monadic encapsulation of state. We have formalized all the technical development and results in Coq.},
+journal = {Proc. ACM Program. Lang.},
+month = dec,
+articleno = {64},
+numpages = {28},
+keywords = {Functional Programming Languages, Program Logics, Iris, Logical Relations, ST Monad, Theory of Programming Languages}
+}
