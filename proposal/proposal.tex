@@ -165,15 +165,20 @@ Another similar approach is \citet{timany}'s work on defining a logical relation
     \label{fig:statics}
   \end{figure}
 
-In this section, we present the CBPV calculus that we will formalize, which is based on the calculus of \citet{forster}.
+In this section, we briefly discuss the CBPV calculus that we will formalize, which is based on the calculus of \citet{forster}.
 This presentation of the CBPV calculus is a standard presentation based on a simply typed lambda calculus with binary product and sum type.
-The syntax and static typing rules of the calculus is shown in Figure~\ref{fig:statics}.
+For the sake of concreteness, we elaborate the syntax and static typing rules of the calculus in Figure~\ref{fig:statics}.
 
-The mantra of the CBPV calculus is "A value \underline{is}, a computation \underline{does}", and this distinction is made even at the syntactic level.
+The mantra of the CBPV calculus is "A value \underline{is}, a computation \underline{does}", and this distinction is made at the syntactic level.
 Types and terms are separated into \textit{value} types and terms, and \textit{computation} types and terms.
 All variables in the context $\Gamma$ have value type.
 A computation in $F \, A$ aims to return a value in A, and has a $\mathsf{return}$ and $\mathsf{let}$ operator which behaves similarly to a monadic bind and return operator. 
 A computation in $U \, \underline{C}$ is a thunk of a computation, and has two associated operators $\mathsf{thunk}$ and $\mathsf{force}$.
+
+The operational semantics we will formalize is a weak reduction, where a primitive reduction is defined for only for the following contexts:
+$ C := \mathsf{let} \; x \leftarrow [] \; \mathsf{in} \; N \sep  \; [] \;V \sep \mathsf{prj}_i \; []$.
+This will allow us to prove a weak normalization and state a semantic typing relation for this simple CBPV calculus.
+
 
 \bibliography{refs}
 
