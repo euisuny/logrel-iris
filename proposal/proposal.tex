@@ -37,41 +37,36 @@
 
 \maketitle{}
 
-
 \section{Project Goal}
-In this project, we aim to encode a unary logical relation for the call-by-push-
-value (CBPV) calculus in the Iris proof framework. CBPV is a nifty calculus that
-subsumes both call-by-value (CBV) and call-by-name (CBN). The scope of this project
-will define a unary semantic typing relation on a basic CBPV calculus. The reason
-that we choose the Iris framework for this purpose is because we view this project
-as necessary groundwork for an exploration of an equational theory of a CBPV
-calculus with recursive types. 
+In this project, we aim to perform logical relations proofs for the call-by-push-value (CBPV) calculus in the Iris proof framework.
+CBPV is a nifty calculus that subsumes both call-by-value (CBV) and call-by-name (CBN) while.
+This project will define a unary semantic typing relation on a basic CBPV calculus.
+The Iris framework provides support for step-indexed logical relations to model recursion.
+We view this direction as necessary groundwork for exploring equational theories of CBPV calculi with recursive types.
 
-\section{Introduction} 
+\section{Introduction}
+
+Our first step will be to define semantic typing for CBPV without recursive types.
+This will require us to learn more about Iris and using the Iris proof mode in Coq to define logical relations in the Iris logic.
+Once this is done, we can extend our language and logical relations to add recursive types.
+At this point, the support for step-indexing in Iris should simplify our definitions compared to manual step-indexing.
+Time permitting, we can also extend to more complex logical relations such as binary relations for contexual equivalence.
+Another possible future direction is to extend our language with more features that are well-suited to the features of Iris, such as higher order state or concurrency. \\
 
 \textbf{Formalized Logical Relations of CBPV}
-This is primarily inspired by the pioneering work of 
-~\cite{rizkallah} of an formalized equational theory of CBPV, which formalizes the
-soundness of the equational theory with relation to an obesrvational equivalence.
-~\cite{forster}'s approach offers a slightly different proof setup: they formalize 
-contexts as first-class objects using a Kripke semantics.
-We wish to develop a formalization similar to ~\cite{forster} because the Iris
-framework offers a natural leverage to Kripke-semantic logical relations.\\
+This is primarily inspired by the pioneering work of \citet{rizkallah} of a formalized equational theory of CBPV, which formalizes the soundness of the equational theory with respect to an observational equivalence.
+\citet{forster}'s approach offers a slightly different proof setup: they formalize contexts as first-class objects using a Kripke semantics.
+We wish to develop a formalization similar to \citet{forster} because the Iris framework offers a natural bridge to building Kripke logical relations.\\
 \\
 \textbf{Iris Proof Framework}
-The Iris proof framework is a state-of-the-art tool that has a rich program logic 
-that can be used for reasoning about concurrent programs. 
-We plan to use its underlying logic, which is based on a 
-step-indexed logical relation, to define a logical relation on CBPV.
-Iris's base logic is equipped with modalities that make this definition easier,
-especially under the presence of recursive types.
-A similar approach is ~\cite{timany}'s work on defining a logical relation for 
-the state monad, where their relation induces a definition of contextual 
-equivalence on effectful computations encapsulated by the ST monad.
+The Iris proof framework is a state-of-the-art tool that has a rich program logic that can be used for reasoning about concurrent programs.
+We plan to use its underlying step-indexed logic to define logical relations for CBPV.
+Iris's base logic is equipped with modalities that make such definition easier, especially in the presence of recursive types.
+\citet{krebbers2017} presents a semantic typing result like the one we plan to do for a similar calculus with recursive types.
+Another similar approach is \citet{timany}'s work on defining a logical relation for the state monad, where their relation induces a definition of contextual equivalence on effectful computations encapsulated by the ST monad.
 
 \section{CBPV Calculus}
-In this section, we present the CBPV calculus that we wish
-to formalize, which is based on the calculus of ~\cite{forster}. 
+In this section, we present the CBPV calculus that we wish to formalize, which is based on the calculus of \citet{forster}.
 
 \newcommand{\sep}{\;|\;}
 
@@ -89,8 +84,8 @@ to formalize, which is based on the calculus of ~\cite{forster}.
         \begin{align*}
         \mathit{value \; terms} &\;\;
             V &&::=&& \mathsf{thunk} \; M \sep x \sep () \sep (V_1, \, V_2) \sep \mathsf{inj}_i \; V \\
-        \mathit{computation \; terms} &\;\; M &&::=&& 
-            * \sep \mathsf{return} \; V \sep \lambda x.M \sep M \; V \sep \langle M_1, M_2 \rangle \sep 
+        \mathit{computation \; terms} &\;\; M &&::=&&
+            * \sep \mathsf{return} \; V \sep \lambda x.M \sep M \; V \sep \langle M_1, M_2 \rangle \sep
             \mathsf{force} \; V \sep \mathsf{case}(V, \, x.M_1, \, x.M_2) \\
             &&&&& \mathsf{let} \; x \leftarrow M \; \mathsf{in} \; N \sep \mathsf{prj}_i \; M
         \end{align*}
@@ -126,10 +121,10 @@ to formalize, which is based on the calculus of ~\cite{forster}.
     \begin{mathpar}
     \end{mathpar}
 
-  
+
     \caption{CBPV Syntax and Statics}
     \label{fig:statics}
-  
+
   \end{figure}
 
 \bibliography{refs}
