@@ -39,16 +39,19 @@
 
 \section{Project Goal}
 In this project, we aim to perform logical relations proofs for the call-by-push-value (CBPV) calculus in the Iris proof framework.
-CBPV is a nifty calculus that subsumes both call-by-value (CBV) and call-by-name (CBN) while.
-This project will define a unary semantic typing relation on a basic CBPV calculus.
-The Iris framework provides support for step-indexed logical relations to model recursion.
-We view this direction as necessary groundwork for exploring equational theories of CBPV calculi with recursive types.
+CBPV is a nifty calculus that subsumes both call-by-value (CBV) and call-by-name (CBN) calculus.
+This project will formalize in Coq a unary logical relation on a basic CBPV calculus and prove weak normalization and state a semantic typing relation.
+We plan to use the Iris framework for this work.
+For the scope of the current proposal, we will be using basic features of the Iris framework to define this logical relation.
+
+We view this project as necessary groundwork for exploring an equational theory of a CBPV calculus with recursive types.
+Since Iris provides support for step-indexed logical relations to model recursion, the future work will be able to take further advantage of the framework.
 
 \section{Introduction}
 
-Our first step will be to define semantic typing for CBPV without recursive types.
+Our first step will be to define a unary logical relation for CBPV without recursive types.
 This will require us to learn more about Iris and using the Iris proof mode in Coq to define logical relations in the Iris logic.
-Once this is done, we can extend our language and logical relations to add recursive types.
+Once this is done, we will extend our language and logical relations to add recursive types.
 At this point, the support for step-indexing in Iris should simplify our definitions compared to manual step-indexing.
 Time permitting, we can also extend to more complex logical relations such as binary relations for contexual equivalence.
 Another possible future direction is to extend our language with more features that are well-suited to the features of Iris, such as higher order state or concurrency. \\
