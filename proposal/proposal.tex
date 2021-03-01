@@ -69,13 +69,68 @@ A similar approach is ~\cite{timany}'s work on defining a logical relation for
 the state monad, where their relation induces a definition of contextual 
 equivalence on effectful computations encapsulated by the ST monad.
 
-\section{Operational Semantics of CBPV}
-In the next two sections, we will describe the operational semantics of CBPV that we wish
-to encode, and a sketch of the semantic typing relation that we wish to prove sound 
-with respect to the operational semantics.
+\section{CBPV Calculus}
+In this section, we present the CBPV calculus that we wish
+to formalize, which is based on the calculus of ~\cite{forster}. 
 
-\section{Semantic Typing of CBPV}
+\newcommand{\sep}{\;|\;}
 
+\begin{figure}[tp]
+    \begin{minipage}{.4\textwidth}
+        \begin{align*}
+        \mathit{value \; types} &\;\;
+            A &&::=&& U \; \underline{C} \sep 0 \sep 1 \sep A_1 \times A_2 \sep A_1 + A_1 \\
+        \mathit{computation \; types} &\;\; \underline{C} &&::=&& F \; A \sep A \rightarrow \underline{C} \sep \top \sep \underline{C_1} \; \& \; \underline{C_2}\\
+        \mathit{environments} &\;\; \Gamma &&::=&& x_1 : A_1, ..., x_n : A_n
+        \end{align*}
+    \end{minipage}
+    \\
+    \begin{minipage}{.4\textwidth}
+        \begin{align*}
+        \mathit{value \; terms} &\;\;
+            V &&::=&& \mathsf{thunk} \; M \sep x \sep () \sep (V_1, \, V_2) \sep \mathsf{inj}_i \; V \\
+        \mathit{computation \; terms} &\;\; M &&::=&& 
+            * \sep \mathsf{return} \; V \sep \lambda x.M \sep M \; V \sep \langle M_1, M_2 \rangle \sep 
+            \mathsf{force} \; V \sep \mathsf{case}(V, \, x.M_1, \, x.M_2) \\
+            &&&&& \mathsf{let} \; x \leftarrow M \; \mathsf{in} \; N \sep \mathsf{prj}_i \; M
+        \end{align*}
+    \end{minipage}%
+    \\ \\
+
+    \footnotesize{\textbf{Value Typing}} \fbox{$\Gamma \vdash^V V : A$}
+
+    \begin{mathpar}
+      \inferrule[var]
+      {(x : A) \in \Gamma}
+      {\Gamma\vdash^V x : A}
+
+      \inferrule[unit]
+      {\strut}
+      {\Gamma\vdash^V () : 1}
+
+      \inferrule[prod]
+      {\Gamma \vdash V_1 : A_1 \; \Gamma \vdash V_2 : A_2}
+      {\Gamma\vdash^V (V_1, \, V_2) : A_1 \times A_2}
+
+      \inferrule[sum]
+      {\Gamma \vdash V : A_i}
+      {\Gamma\vdash^V \mathsf{inj}_i \; V : A_1 + A_2}
+
+      \inferrule[thunk]
+      {\Gamma \vdash M : \underline{C}}
+      {\Gamma\vdash^V \mathsf{thunk} \; V : U \; \underline{C}}
+    \end{mathpar}
+
+    \footnotesize{\textbf{Computation Typing}} \fbox{$\Gamma \vdash^C M : C$}
+
+    \begin{mathpar}
+    \end{mathpar}
+
+  
+    \caption{CBPV Syntax and Statics}
+    \label{fig:statics}
+  
+  \end{figure}
 
 \bibliography{refs}
 
