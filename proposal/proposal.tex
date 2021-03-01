@@ -66,15 +66,15 @@ Iris's base logic is equipped with modalities that make such definition easier, 
 Another similar approach is \citet{timany}'s work on defining a logical relation for the state monad, where their relation induces a definition of contextual equivalence on effectful computations encapsulated by the ST monad.
 
 \section{CBPV Calculus}
-In this section, we present the CBPV calculus that we wish to formalize, which is based on the calculus of \citet{forster}.
+
 
 \newcommand{\sep}{\;|\;}
 
-\begin{figure}[tp]
+\begin{figure}[htp]
     \begin{minipage}{.4\textwidth}
         \begin{align*}
         \mathit{value \; types} &\;\;
-            A &&::=&& U \; \underline{C} \sep 0 \sep 1 \sep A_1 \times A_2 \sep A_1 + A_1 \\
+            A &&::=&& U \; \underline{C} \sep 1 \sep A_1 \times A_2 \sep A_1 + A_1 \\
         \mathit{computation \; types} &\;\; \underline{C} &&::=&& F \; A \sep A \rightarrow \underline{C} \sep \top \sep \underline{C_1} \; \& \; \underline{C_2}\\
         \mathit{environments} &\;\; \Gamma &&::=&& x_1 : A_1, ..., x_n : A_n
         \end{align*}
@@ -116,16 +116,64 @@ In this section, we present the CBPV calculus that we wish to formalize, which i
       {\Gamma\vdash^V \mathsf{thunk} \; V : U \; \underline{C}}
     \end{mathpar}
 
-    \footnotesize{\textbf{Computation Typing}} \fbox{$\Gamma \vdash^C M : C$}
+    \footnotesize{\textbf{Computation Typing}} \fbox{$\Gamma \vdash^C M : \underline{C}$}
 
     \begin{mathpar}
-    \end{mathpar}
+        \inferrule[unit]
+        {\strut}
+        {\Gamma\vdash^C * : \top}
 
+        \inferrule[ret]
+        {\Gamma \vdash^V V : A}
+        {\Gamma \vdash^C \mathsf{return}\; V : F \; A}
+        
+        \inferrule[bind]
+        {\Gamma \vdash^C M : F \; A \\ \Gamma, x : A \vdash^C N : \underline{C}}
+        {\Gamma \vdash^C \mathsf{let} \leftarrow M \; in \; N : \underline{C}}
+
+        \inferrule[lam]
+        {\Gamma, x : A \vdash^C M : \underline{C}}
+        {\Gamma \vdash^C \lambda x.M : A \rightarrow \underline{C}}
+
+        \inferrule[app]
+        {\Gamma \vdash^C M : A \rightarrow \underline{C}  \\
+         \Gamma \vdash^V V : A}
+        {\Gamma \vdash^C M \; V : \underline{C}}
+
+        \inferrule[force]
+        {\Gamma \vdash^V U \; \underline{C}}
+        {\Gamma \vdash^C \mathsf{force}\; V : \underline{C}}
+
+        \inferrule[case]
+        {\Gamma \vdash^V V : A_1 + A_2 \;\\
+         \Gamma, x_1 : A_1 \vdash^C M_1 : \underline{C} \\
+         \Gamma, x_2 : A_2 \vdash^C M_2 : \underline{C}}
+        {\Gamma \vdash^C \mathsf{case}(V,\, x_1.M_1, \, x_2.M_2) : \underline{C}}
+
+        \inferrule[pair]
+        {\Gamma \vdash^C M_1 : \underline{C_1} \\ 
+        \Gamma \vdash^C M_2 : \underline{C_2}}
+        {\Gamma \vdash^C \langle M_1, M_2 \rangle : \underline{C_1} \; \& \; \underline{C_2}}
+
+        \inferrule[prj]
+        {\Gamma \vdash^C \underline{C_1} \;\&\; \underline{C_2}}
+        {\Gamma \vdash^C \mathsf{prj}_i M : \underline{C_i}}
+
+    \end{mathpar}
 
     \caption{CBPV Syntax and Statics}
     \label{fig:statics}
-
   \end{figure}
+
+In this section, we present the CBPV calculus that we will formalize, which is based on the calculus of \citet{forster}.
+This presentation of the CBPV calculus is a standard presentation based on a simply typed lambda calculus with binary product and sum type.
+The syntax and static typing rules of the calculus is shown in Figure~\ref{fig:statics}.
+
+The mantra of the CBPV calculus is "A value \underline{is}, a computation \underline{does}", and this distinction is made even at the syntactic level.
+Types and terms are separated into \textit{value} types and terms, and \textit{computation} types and terms.
+All variables in the context $\Gamma$ have value type.
+A computation in $F \, A$ aims to return a value in A, and has a $\mathsf{return}$ and $\mathsf{let}$ operator which behaves similarly to a monadic bind and return operator. 
+A computation in $U \, \underline{C}$ is a thunk of a computation, and has two associated operators $\mathsf{thunk}$ and $\mathsf{force}$.
 
 \bibliography{refs}
 
