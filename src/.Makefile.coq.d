@@ -1,3 +1,15 @@
+axioms.vo axioms.glob axioms.v.beautified axioms.required_vo: axioms.v 
+axioms.vio: axioms.v 
+axioms.vos axioms.vok axioms.required_vos: axioms.v 
+header_extensible.vo header_extensible.glob header_extensible.v.beautified header_extensible.required_vo: header_extensible.v 
+header_extensible.vio: header_extensible.v 
+header_extensible.vos header_extensible.vok header_extensible.required_vos: header_extensible.v 
+fintype.vo fintype.glob fintype.v.beautified fintype.required_vo: fintype.v axioms.vo
+fintype.vio: fintype.v axioms.vio
+fintype.vos fintype.vok fintype.required_vos: fintype.v axioms.vos
+syntax.vo syntax.glob syntax.v.beautified syntax.required_vo: syntax.v fintype.vo header_extensible.vo
+syntax.vio: syntax.v fintype.vio header_extensible.vio
+syntax.vos syntax.vok syntax.required_vos: syntax.v fintype.vos header_extensible.vos
 lang.vo lang.glob lang.v.beautified lang.required_vo: lang.v 
 lang.vio: lang.v 
 lang.vos lang.vok lang.required_vos: lang.v 

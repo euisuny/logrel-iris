@@ -4,6 +4,10 @@
 # Cannot use non-canonical projections as it causes massive unification failures
 # (https://github.com/coq/coq/issues/6294).
 -arg -w -arg -redundant-canonical-projection
+axioms.v
+header_extensible.v
+fintype.v
+syntax.v
 lang.v
 rules.v
 typing.v
