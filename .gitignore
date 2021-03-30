@@ -3,6 +3,7 @@ CoqMakefile*
 *.vok
 *.vos
 .CoqMakefile.d
+src/.Makefile.coq.d
 Makefile.coq*
 
 *.vo

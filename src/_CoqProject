@@ -8,6 +8,8 @@ axioms.v
 header_extensible.v
 fintype.v
 syntax.v
+terms.v
+
 lang.v
 rules.v
 typing.v
