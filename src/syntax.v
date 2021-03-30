@@ -3,15 +3,15 @@ From cbpv Require Export header_extensible.
 
 Section valtypecomptype.
 Inductive valtype  : Type :=
-  | zero : valtype 
-  | one : valtype 
-  | U : comptype   -> valtype 
-  | Sigma : valtype   -> valtype   -> valtype 
-  | cross : valtype   -> valtype   -> valtype 
+  | zero : valtype
+  | one : valtype
+  | U : comptype   -> valtype
+  | Sigma : valtype   -> valtype   -> valtype
+  | cross : valtype   -> valtype   -> valtype
  with comptype  : Type :=
-  | cone : comptype 
-  | F : valtype   -> comptype 
-  | Pi : comptype   -> comptype   -> comptype 
+  | cone : comptype
+  | F : valtype   -> comptype
+  | Pi : comptype   -> comptype   -> comptype
   | arrow : valtype   -> comptype   -> comptype .
 
 Lemma congr_zero  : zero  = zero  .
@@ -178,14 +178,14 @@ Definition upIdList_value_value { p : nat } { mvalue : nat } (sigma : (fin) (mva
 Fixpoint idSubst_value { mvalue : nat } (sigmavalue : (fin) (mvalue) -> value (mvalue)) (Eqvalue : forall x, sigmavalue x = (var_value (mvalue)) x) (s : value (mvalue)) : subst_value sigmavalue s = s :=
     match s with
     | var_value (_) s => Eqvalue s
-    | u (_)  => congr_u 
+    | u (_)  => congr_u
     | pair (_) s0 s1 => congr_pair ((idSubst_value sigmavalue Eqvalue) s0) ((idSubst_value sigmavalue Eqvalue) s1)
     | inj (_) s0 s1 => congr_inj ((fun x => (eq_refl) x) s0) ((idSubst_value sigmavalue Eqvalue) s1)
     | thunk (_) s0 => congr_thunk ((idSubst_comp sigmavalue Eqvalue) s0)
     end
  with idSubst_comp { mvalue : nat } (sigmavalue : (fin) (mvalue) -> value (mvalue)) (Eqvalue : forall x, sigmavalue x = (var_value (mvalue)) x) (s : comp (mvalue)) : subst_comp sigmavalue s = s :=
     match s with
-    | cu (_)  => congr_cu 
+    | cu (_)  => congr_cu
     | force (_) s0 => congr_force ((idSubst_value sigmavalue Eqvalue) s0)
     | lambda (_) s0 => congr_lambda ((idSubst_comp (up_value_value sigmavalue) (upId_value_value (_) Eqvalue)) s0)
     | app (_) s0 s1 => congr_app ((idSubst_comp sigmavalue Eqvalue) s0) ((idSubst_value sigmavalue Eqvalue) s1)
@@ -210,14 +210,14 @@ Definition upExtRen_list_value_value { p : nat } { m : nat } { n : nat } (xi : (
 Fixpoint extRen_value { mvalue : nat } { nvalue : nat } (xivalue : (fin) (mvalue) -> (fin) (nvalue)) (zetavalue : (fin) (mvalue) -> (fin) (nvalue)) (Eqvalue : forall x, xivalue x = zetavalue x) (s : value (mvalue)) : ren_value xivalue s = ren_value zetavalue s :=
     match s with
     | var_value (_) s => (ap) (var_value (nvalue)) (Eqvalue s)
-    | u (_)  => congr_u 
+    | u (_)  => congr_u
     | pair (_) s0 s1 => congr_pair ((extRen_value xivalue zetavalue Eqvalue) s0) ((extRen_value xivalue zetavalue Eqvalue) s1)
     | inj (_) s0 s1 => congr_inj ((fun x => (eq_refl) x) s0) ((extRen_value xivalue zetavalue Eqvalue) s1)
     | thunk (_) s0 => congr_thunk ((extRen_comp xivalue zetavalue Eqvalue) s0)
     end
  with extRen_comp { mvalue : nat } { nvalue : nat } (xivalue : (fin) (mvalue) -> (fin) (nvalue)) (zetavalue : (fin) (mvalue) -> (fin) (nvalue)) (Eqvalue : forall x, xivalue x = zetavalue x) (s : comp (mvalue)) : ren_comp xivalue s = ren_comp zetavalue s :=
     match s with
-    | cu (_)  => congr_cu 
+    | cu (_)  => congr_cu
     | force (_) s0 => congr_force ((extRen_value xivalue zetavalue Eqvalue) s0)
     | lambda (_) s0 => congr_lambda ((extRen_comp (upRen_value_value xivalue) (upRen_value_value zetavalue) (upExtRen_value_value (_) (_) Eqvalue)) s0)
     | app (_) s0 s1 => congr_app ((extRen_comp xivalue zetavalue Eqvalue) s0) ((extRen_value xivalue zetavalue Eqvalue) s1)
@@ -242,14 +242,14 @@ Definition upExt_list_value_value { p : nat } { m : nat } { nvalue : nat } (sigm
 Fixpoint ext_value { mvalue : nat } { nvalue : nat } (sigmavalue : (fin) (mvalue) -> value (nvalue)) (tauvalue : (fin) (mvalue) -> value (nvalue)) (Eqvalue : forall x, sigmavalue x = tauvalue x) (s : value (mvalue)) : subst_value sigmavalue s = subst_value tauvalue s :=
     match s with
     | var_value (_) s => Eqvalue s
-    | u (_)  => congr_u 
+    | u (_)  => congr_u
     | pair (_) s0 s1 => congr_pair ((ext_value sigmavalue tauvalue Eqvalue) s0) ((ext_value sigmavalue tauvalue Eqvalue) s1)
     | inj (_) s0 s1 => congr_inj ((fun x => (eq_refl) x) s0) ((ext_value sigmavalue tauvalue Eqvalue) s1)
     | thunk (_) s0 => congr_thunk ((ext_comp sigmavalue tauvalue Eqvalue) s0)
     end
  with ext_comp { mvalue : nat } { nvalue : nat } (sigmavalue : (fin) (mvalue) -> value (nvalue)) (tauvalue : (fin) (mvalue) -> value (nvalue)) (Eqvalue : forall x, sigmavalue x = tauvalue x) (s : comp (mvalue)) : subst_comp sigmavalue s = subst_comp tauvalue s :=
     match s with
-    | cu (_)  => congr_cu 
+    | cu (_)  => congr_cu
     | force (_) s0 => congr_force ((ext_value sigmavalue tauvalue Eqvalue) s0)
     | lambda (_) s0 => congr_lambda ((ext_comp (up_value_value sigmavalue) (up_value_value tauvalue) (upExt_value_value (_) (_) Eqvalue)) s0)
     | app (_) s0 s1 => congr_app ((ext_comp sigmavalue tauvalue Eqvalue) s0) ((ext_value sigmavalue tauvalue Eqvalue) s1)
@@ -271,14 +271,14 @@ Definition up_ren_ren_list_value_value { p : nat } { k : nat } { l : nat } { m :
 Fixpoint compRenRen_value { kvalue : nat } { lvalue : nat } { mvalue : nat } (xivalue : (fin) (mvalue) -> (fin) (kvalue)) (zetavalue : (fin) (kvalue) -> (fin) (lvalue)) (rhovalue : (fin) (mvalue) -> (fin) (lvalue)) (Eqvalue : forall x, ((funcomp) zetavalue xivalue) x = rhovalue x) (s : value (mvalue)) : ren_value zetavalue (ren_value xivalue s) = ren_value rhovalue s :=
     match s with
     | var_value (_) s => (ap) (var_value (lvalue)) (Eqvalue s)
-    | u (_)  => congr_u 
+    | u (_)  => congr_u
     | pair (_) s0 s1 => congr_pair ((compRenRen_value xivalue zetavalue rhovalue Eqvalue) s0) ((compRenRen_value xivalue zetavalue rhovalue Eqvalue) s1)
     | inj (_) s0 s1 => congr_inj ((fun x => (eq_refl) x) s0) ((compRenRen_value xivalue zetavalue rhovalue Eqvalue) s1)
     | thunk (_) s0 => congr_thunk ((compRenRen_comp xivalue zetavalue rhovalue Eqvalue) s0)
     end
  with compRenRen_comp { kvalue : nat } { lvalue : nat } { mvalue : nat } (xivalue : (fin) (mvalue) -> (fin) (kvalue)) (zetavalue : (fin) (kvalue) -> (fin) (lvalue)) (rhovalue : (fin) (mvalue) -> (fin) (lvalue)) (Eqvalue : forall x, ((funcomp) zetavalue xivalue) x = rhovalue x) (s : comp (mvalue)) : ren_comp zetavalue (ren_comp xivalue s) = ren_comp rhovalue s :=
     match s with
-    | cu (_)  => congr_cu 
+    | cu (_)  => congr_cu
     | force (_) s0 => congr_force ((compRenRen_value xivalue zetavalue rhovalue Eqvalue) s0)
     | lambda (_) s0 => congr_lambda ((compRenRen_comp (upRen_value_value xivalue) (upRen_value_value zetavalue) (upRen_value_value rhovalue) (up_ren_ren (_) (_) (_) Eqvalue)) s0)
     | app (_) s0 s1 => congr_app ((compRenRen_comp xivalue zetavalue rhovalue Eqvalue) s0) ((compRenRen_value xivalue zetavalue rhovalue Eqvalue) s1)
@@ -303,14 +303,14 @@ Definition up_ren_subst_list_value_value { p : nat } { k : nat } { l : nat } { m
 Fixpoint compRenSubst_value { kvalue : nat } { lvalue : nat } { mvalue : nat } (xivalue : (fin) (mvalue) -> (fin) (kvalue)) (tauvalue : (fin) (kvalue) -> value (lvalue)) (thetavalue : (fin) (mvalue) -> value (lvalue)) (Eqvalue : forall x, ((funcomp) tauvalue xivalue) x = thetavalue x) (s : value (mvalue)) : subst_value tauvalue (ren_value xivalue s) = subst_value thetavalue s :=
     match s with
     | var_value (_) s => Eqvalue s
-    | u (_)  => congr_u 
+    | u (_)  => congr_u
     | pair (_) s0 s1 => congr_pair ((compRenSubst_value xivalue tauvalue thetavalue Eqvalue) s0) ((compRenSubst_value xivalue tauvalue thetavalue Eqvalue) s1)
     | inj (_) s0 s1 => congr_inj ((fun x => (eq_refl) x) s0) ((compRenSubst_value xivalue tauvalue thetavalue Eqvalue) s1)
     | thunk (_) s0 => congr_thunk ((compRenSubst_comp xivalue tauvalue thetavalue Eqvalue) s0)
     end
  with compRenSubst_comp { kvalue : nat } { lvalue : nat } { mvalue : nat } (xivalue : (fin) (mvalue) -> (fin) (kvalue)) (tauvalue : (fin) (kvalue) -> value (lvalue)) (thetavalue : (fin) (mvalue) -> value (lvalue)) (Eqvalue : forall x, ((funcomp) tauvalue xivalue) x = thetavalue x) (s : comp (mvalue)) : subst_comp tauvalue (ren_comp xivalue s) = subst_comp thetavalue s :=
     match s with
-    | cu (_)  => congr_cu 
+    | cu (_)  => congr_cu
     | force (_) s0 => congr_force ((compRenSubst_value xivalue tauvalue thetavalue Eqvalue) s0)
     | lambda (_) s0 => congr_lambda ((compRenSubst_comp (upRen_value_value xivalue) (up_value_value tauvalue) (up_value_value thetavalue) (up_ren_subst_value_value (_) (_) (_) Eqvalue)) s0)
     | app (_) s0 s1 => congr_app ((compRenSubst_comp xivalue tauvalue thetavalue Eqvalue) s0) ((compRenSubst_value xivalue tauvalue thetavalue Eqvalue) s1)
@@ -335,14 +335,14 @@ Definition up_subst_ren_list_value_value { p : nat } { k : nat } { lvalue : nat 
 Fixpoint compSubstRen_value { kvalue : nat } { lvalue : nat } { mvalue : nat } (sigmavalue : (fin) (mvalue) -> value (kvalue)) (zetavalue : (fin) (kvalue) -> (fin) (lvalue)) (thetavalue : (fin) (mvalue) -> value (lvalue)) (Eqvalue : forall x, ((funcomp) (ren_value zetavalue) sigmavalue) x = thetavalue x) (s : value (mvalue)) : ren_value zetavalue (subst_value sigmavalue s) = subst_value thetavalue s :=
     match s with
     | var_value (_) s => Eqvalue s
-    | u (_)  => congr_u 
+    | u (_)  => congr_u
     | pair (_) s0 s1 => congr_pair ((compSubstRen_value sigmavalue zetavalue thetavalue Eqvalue) s0) ((compSubstRen_value sigmavalue zetavalue thetavalue Eqvalue) s1)
     | inj (_) s0 s1 => congr_inj ((fun x => (eq_refl) x) s0) ((compSubstRen_value sigmavalue zetavalue thetavalue Eqvalue) s1)
     | thunk (_) s0 => congr_thunk ((compSubstRen_comp sigmavalue zetavalue thetavalue Eqvalue) s0)
     end
  with compSubstRen_comp { kvalue : nat } { lvalue : nat } { mvalue : nat } (sigmavalue : (fin) (mvalue) -> value (kvalue)) (zetavalue : (fin) (kvalue) -> (fin) (lvalue)) (thetavalue : (fin) (mvalue) -> value (lvalue)) (Eqvalue : forall x, ((funcomp) (ren_value zetavalue) sigmavalue) x = thetavalue x) (s : comp (mvalue)) : ren_comp zetavalue (subst_comp sigmavalue s) = subst_comp thetavalue s :=
     match s with
-    | cu (_)  => congr_cu 
+    | cu (_)  => congr_cu
     | force (_) s0 => congr_force ((compSubstRen_value sigmavalue zetavalue thetavalue Eqvalue) s0)
     | lambda (_) s0 => congr_lambda ((compSubstRen_comp (up_value_value sigmavalue) (upRen_value_value zetavalue) (up_value_value thetavalue) (up_subst_ren_value_value (_) (_) (_) Eqvalue)) s0)
     | app (_) s0 s1 => congr_app ((compSubstRen_comp sigmavalue zetavalue thetavalue Eqvalue) s0) ((compSubstRen_value sigmavalue zetavalue thetavalue Eqvalue) s1)
@@ -367,14 +367,14 @@ Definition up_subst_subst_list_value_value { p : nat } { k : nat } { lvalue : na
 Fixpoint compSubstSubst_value { kvalue : nat } { lvalue : nat } { mvalue : nat } (sigmavalue : (fin) (mvalue) -> value (kvalue)) (tauvalue : (fin) (kvalue) -> value (lvalue)) (thetavalue : (fin) (mvalue) -> value (lvalue)) (Eqvalue : forall x, ((funcomp) (subst_value tauvalue) sigmavalue) x = thetavalue x) (s : value (mvalue)) : subst_value tauvalue (subst_value sigmavalue s) = subst_value thetavalue s :=
     match s with
     | var_value (_) s => Eqvalue s
-    | u (_)  => congr_u 
+    | u (_)  => congr_u
     | pair (_) s0 s1 => congr_pair ((compSubstSubst_value sigmavalue tauvalue thetavalue Eqvalue) s0) ((compSubstSubst_value sigmavalue tauvalue thetavalue Eqvalue) s1)
     | inj (_) s0 s1 => congr_inj ((fun x => (eq_refl) x) s0) ((compSubstSubst_value sigmavalue tauvalue thetavalue Eqvalue) s1)
     | thunk (_) s0 => congr_thunk ((compSubstSubst_comp sigmavalue tauvalue thetavalue Eqvalue) s0)
     end
  with compSubstSubst_comp { kvalue : nat } { lvalue : nat } { mvalue : nat } (sigmavalue : (fin) (mvalue) -> value (kvalue)) (tauvalue : (fin) (kvalue) -> value (lvalue)) (thetavalue : (fin) (mvalue) -> value (lvalue)) (Eqvalue : forall x, ((funcomp) (subst_value tauvalue) sigmavalue) x = thetavalue x) (s : comp (mvalue)) : subst_comp tauvalue (subst_comp sigmavalue s) = subst_comp thetavalue s :=
     match s with
-    | cu (_)  => congr_cu 
+    | cu (_)  => congr_cu
     | force (_) s0 => congr_force ((compSubstSubst_value sigmavalue tauvalue thetavalue Eqvalue) s0)
     | lambda (_) s0 => congr_lambda ((compSubstSubst_comp (up_value_value sigmavalue) (up_value_value tauvalue) (up_value_value thetavalue) (up_subst_subst_value_value (_) (_) (_) Eqvalue)) s0)
     | app (_) s0 s1 => congr_app ((compSubstSubst_comp sigmavalue tauvalue thetavalue Eqvalue) s0) ((compSubstSubst_value sigmavalue tauvalue thetavalue Eqvalue) s1)
@@ -399,14 +399,14 @@ Definition rinstInst_up_list_value_value { p : nat } { m : nat } { nvalue : nat 
 Fixpoint rinst_inst_value { mvalue : nat } { nvalue : nat } (xivalue : (fin) (mvalue) -> (fin) (nvalue)) (sigmavalue : (fin) (mvalue) -> value (nvalue)) (Eqvalue : forall x, ((funcomp) (var_value (nvalue)) xivalue) x = sigmavalue x) (s : value (mvalue)) : ren_value xivalue s = subst_value sigmavalue s :=
     match s with
     | var_value (_) s => Eqvalue s
-    | u (_)  => congr_u 
+    | u (_)  => congr_u
     | pair (_) s0 s1 => congr_pair ((rinst_inst_value xivalue sigmavalue Eqvalue) s0) ((rinst_inst_value xivalue sigmavalue Eqvalue) s1)
     | inj (_) s0 s1 => congr_inj ((fun x => (eq_refl) x) s0) ((rinst_inst_value xivalue sigmavalue Eqvalue) s1)
     | thunk (_) s0 => congr_thunk ((rinst_inst_comp xivalue sigmavalue Eqvalue) s0)
     end
  with rinst_inst_comp { mvalue : nat } { nvalue : nat } (xivalue : (fin) (mvalue) -> (fin) (nvalue)) (sigmavalue : (fin) (mvalue) -> value (nvalue)) (Eqvalue : forall x, ((funcomp) (var_value (nvalue)) xivalue) x = sigmavalue x) (s : comp (mvalue)) : ren_comp xivalue s = subst_comp sigmavalue s :=
     match s with
-    | cu (_)  => congr_cu 
+    | cu (_)  => congr_cu
     | force (_) s0 => congr_force ((rinst_inst_value xivalue sigmavalue Eqvalue) s0)
     | lambda (_) s0 => congr_lambda ((rinst_inst_comp (upRen_value_value xivalue) (up_value_value sigmavalue) (rinstInst_up_value_value (_) (_) Eqvalue)) s0)
     | app (_) s0 s1 => congr_app ((rinst_inst_comp xivalue sigmavalue Eqvalue) s0) ((rinst_inst_value xivalue sigmavalue Eqvalue) s1)
@@ -549,7 +549,7 @@ Notation "↑__value" := (up_value_value) (only printing) : subst_scope.
 
 Global Instance Up_value_value { m : nat } { nvalue : nat } : Up_value (_) (_) := @up_value_value (m) (nvalue) .
 
-Notation "s [ sigmavalue ]" := (subst_value sigmavalue s) (at level 7, left associativity, only printing) : subst_scope.
+(* Notation "s [ sigmavalue ]" := (subst_value sigmavalue s) (at level 7, left associativity, only printing) : subst_scope. *)
 
 Notation "[ sigmavalue ]" := (subst_value sigmavalue) (at level 1, left associativity, only printing) : fscope.
 
@@ -557,7 +557,7 @@ Notation "s ⟨ xivalue ⟩" := (ren_value xivalue s) (at level 7, left associat
 
 Notation "⟨ xivalue ⟩" := (ren_value xivalue) (at level 1, left associativity, only printing) : fscope.
 
-Notation "s [ sigmavalue ]" := (subst_comp sigmavalue s) (at level 7, left associativity, only printing) : subst_scope.
+(* Notation "s [ sigmavalue ]" := (subst_comp sigmavalue s) (at level 7, left associativity, only printing) : subst_scope. *)
 
 Notation "[ sigmavalue ]" := (subst_comp sigmavalue) (at level 1, left associativity, only printing) : fscope.
 

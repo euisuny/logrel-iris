@@ -2,7 +2,7 @@ Set Implicit Arguments.
 Require Import Omega Logic List Classes.Morphisms.
 Import List Notations.
 
-From cbpv Require Export syntax.
+From cbpv Require Import syntax.
 
 Scheme value_ind_2 := Induction for value Sort Prop
   with comp_ind_2  := Induction for comp Sort Prop.
