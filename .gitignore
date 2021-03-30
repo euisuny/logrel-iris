@@ -3,12 +3,14 @@ CoqMakefile*
 *.vok
 *.vos
 .CoqMakefile.d
+Makefile.coq*
 
 *.vo
 *.glob
 
 .depend
 .DS_Store
+.lia*
 
 # Latex files
 *.log
