@@ -1,4 +1,4 @@
-From cbpv Require Export fundamental.
+From iris_examples.logrel.stlc Require Export fundamental.
 From iris.proofmode Require Import tactics.
 From iris.program_logic Require Import adequacy.
 

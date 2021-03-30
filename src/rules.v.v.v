@@ -1,7 +1,7 @@
 From iris.program_logic Require Export weakestpre.
 From iris.proofmode Require Export tactics.
 From iris.program_logic Require Import ectx_lifting.
-From cbpv Require Export lang.
+From iris_examples.logrel.stlc Require Export lang.
 From stdpp Require Import fin_maps.
 
 Section stlc_rules.

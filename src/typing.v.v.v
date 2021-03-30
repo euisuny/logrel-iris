@@ -1,4 +1,4 @@
-From cbpv Require Export lang.
+From iris_examples.logrel.stlc Require Export lang.
 
 Inductive type :=
   | TUnit : type
