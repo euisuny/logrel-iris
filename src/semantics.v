@@ -57,15 +57,14 @@ Notation "A >+ B" := (plus step A B) (at level 60).
 (** ** Context Semantics *)
 (** Evaluation context *)
 Inductive ectx {n: nat}: Type :=
-| ectxHole : ectx
+(* | ectxHole : ectx *)
 | ectxApp : ectx -> value n -> ectx
 | ectxProj : bool -> ectx -> ectx
 | ectxLetin : ectx -> comp (S n) -> ectx.
 
 (** Context filling *)
-Fixpoint fill {n: nat} (K: ectx) (c: comp n) :=
+Fixpoint fill {n: nat} (K: ectx) (c: comp n) : comp n:=
   match K with
-  | ectxHole => c
   | ectxApp K v => (fill K c) v
   | ectxProj b K => proj b (fill K c)
   | ectxLetin K c' => letin (fill K c) c'
@@ -175,18 +174,19 @@ Hint Resolve confluence_steps.
 
 
 
-(** The operational semantic and the context semantic agree *)
-Lemma step_equiv {n: nat} (c c': comp n): c > c' <->  c ⇝ c'.
-Proof.
-  split.
-  - induction 1.
-    + eapply (contextStep ectxHole); eauto.
-    + inv IHstep; eapply (contextStep (ectxApp C v)); eauto.
-    + inv IHstep; eapply (contextStep (ectxProj b C)); eauto.
-    + inv IHstep; eapply (contextStep (ectxLetin C c2)); eauto.
-  - destruct 1; subst c''; subst c'''.
-    induction C in c, c', H |-*; cbn; eauto.
-Qed.
+(* (** The operational semantic and the context semantic agree *) *)
+(* Lemma step_equiv {n: nat} (c c': comp n): c > c' <->  c ⇝ c'. *)
+(* Proof. *)
+(*   split. *)
+(*   - induction 1. *)
+(*     (* + eapply (contextStep _); eauto. inv H. cbn in H.  *) *)
+(*     + admit.  *)
+(*     + inv IHstep; eapply (contextStep (ectxApp C v)); eauto. *)
+(*     + inv IHstep; eapply (contextStep (ectxProj b C)); eauto. *)
+(*     + inv IHstep; eapply (contextStep (ectxLetin C c2)); eauto. *)
+(*   - destruct 1; subst c''; subst c'''. *)
+(*     induction C in c, c', H |-*; cbn; eauto. *)
+(* Qed. *)
 
 
 
@@ -256,14 +256,14 @@ Qed.
 
 
 
-Lemma ectx_decompose {n: nat} (K : @ectx n) c c':
-  fill K c ▷ c' -> exists c'', c ▷ c'' /\ fill K c'' ▷ c'.
-Proof.
-  induction K in c, c' |-*; cbn; intros H.
-  1: eexists; intuition; eauto; induction H; eauto.
-  all: inv H; edestruct IHK; eauto; intuition.
-  all: eexists; intuition; eauto.
-Qed.
+(* Lemma ectx_decompose {n: nat} (K : @ectx n) c c': *)
+(*   fill K c ▷ c' -> exists c'', c ▷ c'' /\ fill K c'' ▷ c'. *)
+(* Proof. *)
+(*   induction K in c, c' |-*; cbn; intros H. *)
+(*   1: eexists; intuition; eauto; induction H; eauto. *)
+(*   all: inv H; edestruct IHK; eauto; intuition. *)
+(*   all: eexists; intuition; eauto. *)
+(* Qed. *)
 
 Lemma ectx_compose {n: nat} (K : @ectx n) c c' c'':
   c ▷ c' -> fill K c' ▷ c'' -> fill K c ▷ c''.

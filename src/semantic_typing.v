@@ -13,10 +13,10 @@ Import List Notations.
 
 From cbpv Require Import
      base
-     abstractreductionsystems
+     abstract_reduction_systems
      fintype
      syntax
-     syntactictyping
+     syntactic_typing
      semantics
      terms.
 
