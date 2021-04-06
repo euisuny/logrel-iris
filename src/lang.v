@@ -124,7 +124,7 @@ Module stlc.
     to_val e1 = None → to_val e2 = None →
     fill_item Ki1 e1 = fill_item Ki2 e2 → Ki1 = Ki2.
   Proof.
-    destruct Ki1, Ki2; intros; try discriminate; simplify_eq;
+    destruct Ki1, Ki2; intros; try discriminate; simplify_eq.
     repeat match goal with
            | H : to_val (of_val _) = None |- _ => by rewrite to_of_val in H
            end; auto.

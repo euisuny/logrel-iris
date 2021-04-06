@@ -551,7 +551,7 @@ Global Instance Up_value_value { m : nat } { nvalue : nat } : Up_value (_) (_) :
 
 (* Notation "s [ sigmavalue ]" := (subst_value sigmavalue s) (at level 7, left associativity, only printing) : subst_scope. *)
 
-Notation "[ sigmavalue ]" := (subst_value sigmavalue) (at level 1, left associativity, only printing) : fscope.
+(* Notation "[ sigmavalue ]" := (subst_value sigmavalue) (at level 1, left associativity, only printing) : fscope. *)
 
 (* Notation "s ⟨ xivalue ⟩" := (ren_value xivalue s) (at level 7, left associativity, only printing) : subst_scope. *)
 
@@ -559,7 +559,7 @@ Notation "⟨ xivalue ⟩" := (ren_value xivalue) (at level 1, left associativit
 
 (* Notation "s [ sigmavalue ]" := (subst_comp sigmavalue s) (at level 7, left associativity, only printing) : subst_scope. *)
 
-Notation "[ sigmavalue ]" := (subst_comp sigmavalue) (at level 1, left associativity, only printing) : fscope.
+(* Notation "[ sigmavalue ]" := (subst_comp sigmavalue) (at level 1, left associativity, only printing) : fscope. *)
 
 (* Notation "s ⟨ xivalue ⟩" := (ren_comp xivalue s) (at level 7, left associativity, only printing) : subst_scope. *)
 
