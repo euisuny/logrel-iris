@@ -6,6 +6,7 @@
 -arg -w -arg -redundant-canonical-projection
 
 axioms.v
+base.v
 header_extensible.v
 fintype.v
 AbstractReductionSystems.v
