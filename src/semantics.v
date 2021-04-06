@@ -9,7 +9,7 @@ Require Import Omega Logic List Classes.Morphisms.
 Import List Notations.
 
 From cbpv Require Import
-     AbstractReductionSystems
+     abstractreductionsystems
      fintype
      syntax
      terms.

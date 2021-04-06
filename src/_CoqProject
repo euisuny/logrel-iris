@@ -9,11 +9,12 @@ axioms.v
 base.v
 header_extensible.v
 fintype.v
-AbstractReductionSystems.v
+abstractreductionsystems.v
 
 syntax.v
 terms.v
 semantics.v
+syntactictyping.v
 
 lang.v
 rules.v
