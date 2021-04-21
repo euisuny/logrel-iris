@@ -7,13 +7,14 @@ From iris.base_logic Require Import invariants.
 From iris.proofmode Require Import tactics.
 
 Section typed_interp.
+
+Definition log_typed `{irisG stlc_lang Σ} (Γ : list type) (e : expr stlc_lang) (τ : type) := ∀ Δ vs,
+  env_Persistent Δ →
+  ⟦ Γ ⟧* Δ vs ⊢ ⟦ τ ⟧ₑ Δ e.[env_subst vs].
+Notation "Γ ⊨ e : τ" := (log_typed Γ e τ) (at level 74, e, τ at next level).
+
 Context `{LANG: irisG stlc_lang Σ}.
   Notation D := (valO stlc_lang -n> iPropO Σ).
-  Definition log_typed `{irisG stlc_lang Σ} (Γ : list type) (e : expr stlc_lang) (τ : type) := ∀ Δ vs,
-    env_Persistent Δ →
-    ⟦ Γ ⟧* Δ vs ⊢ ⟦ τ ⟧ₑ Δ e.[env_subst vs].
-  Notation "Γ ⊨ e : τ" := (log_typed Γ e τ) (at level 74, e, τ at next level).
-
   Local Tactic Notation "smart_wp_bind" uconstr(ctx) ident(v) constr(Hv) uconstr(Hp) :=
     iApply (wp_bind (fill [ctx]));
     iApply (wp_wand with "[-]"); [iApply Hp; trivial|]; cbn;
