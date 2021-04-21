@@ -3,6 +3,7 @@ From Autosubst Require Export Autosubst.
 
 Module stlc.
   Inductive expr :=
+    | Rec (e : {bind 2 of expr})
     | Var (x : var)
     | Lam (e : {bind 1 of expr})
     | App (e1 e2 : expr)
@@ -15,7 +16,10 @@ Module stlc.
     (* Sums *)
     | InjL (e : expr)
     | InjR (e : expr)
-    | Case (e0 : expr) (e1 : {bind expr}) (e2 : {bind expr}).
+    | Case (e0 : expr) (e1 : {bind expr}) (e2 : {bind expr})
+    (* Recursive Types *)
+    | Fold (e : expr)
+    | Unfold (e : expr).
 
   Instance Ids_expr : Ids expr. derive. Defined.
   Instance Rename_expr : Rename expr. derive. Defined.
@@ -23,14 +27,18 @@ Module stlc.
   Instance SubstLemmas_expr : SubstLemmas expr. derive. Qed.
 
   Inductive val :=
+    | RecV (e : {bind 1 of expr})
     | LamV (e : {bind 1 of expr})
     | UnitV
     | PairV (v1 v2 : val)
     | InjLV (v : val)
-    | InjRV (v : val).
+    | InjRV (v : val)
+    | FoldV (v : val).
 
   Fixpoint of_val (v : val) : expr :=
     match v with
+    | RecV e => Rec e
+    | FoldV v => Fold (of_val v)
     | LamV e => Lam e
     | UnitV => Unit
     | PairV v1 v2 => Pair (of_val v1) (of_val v2)
@@ -46,6 +54,8 @@ Module stlc.
     | Pair e1 e2 => v1 ← to_val e1; v2 ← to_val e2; Some (PairV v1 v2)
     | InjL e => InjLV <$> to_val e
     | InjR e => InjRV <$> to_val e
+    | Rec e => Some (RecV e)
+    | Fold e => v ← to_val e; Some (FoldV v)
     | _ => None
     end.
 
@@ -59,7 +69,9 @@ Module stlc.
   | SndCtx
   | InjLCtx
   | InjRCtx
-  | CaseCtx (e1 : {bind expr}) (e2 : {bind expr}).
+  | CaseCtx (e1 : {bind expr}) (e2 : {bind expr})
+  | FoldCtx
+  | UnfoldCtx.
 
   Definition fill_item (Ki : ectx_item) (e : expr) : expr :=
     match Ki with
@@ -72,6 +84,8 @@ Module stlc.
     | InjLCtx => InjL e
     | InjRCtx => InjR e
     | CaseCtx e1 e2 => Case e e1 e2
+    | FoldCtx => Fold e
+    | UnfoldCtx => Unfold e
     end.
 
   Definition state : Type := ().
@@ -86,6 +100,10 @@ Module stlc.
   | SndS e1 v1 e2 v2 σ :
       to_val e1 = Some v1 → to_val e2 = Some v2 →
       head_step (Snd (Pair e1 e2)) σ [] e2 σ []
+  (* Recursive Types *)
+  | Unfold_Fold e v σ :
+      to_val e = Some v →
+      head_step (Unfold (Fold e)) σ [] e σ []
   | CaseLS e0 v0 e1 e2 σ :
       to_val e0 = Some v0 →
       head_step (Case (InjL e0) e1 e2) σ [] e1.[e0/] σ []
