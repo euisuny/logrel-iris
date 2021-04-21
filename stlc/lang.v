@@ -92,6 +92,9 @@ Module stlc.
 
   Inductive head_step : expr → state → list Empty_set → expr → state → list expr → Prop :=
   | BetaS e1 e2 v2 σ :
+        to_val e2 = Some v2 →
+        head_step (App (Rec e1) e2) σ [] e1.[(Rec e1), e2/] σ []
+  | LamBetaS e1 e2 v2 σ :
       to_val e2 = Some v2 →
       head_step (App (Lam e1) e2) σ [] e1.[e2/] σ []
   | FstS e1 v1 e2 v2 σ :

@@ -30,8 +30,16 @@ Section stlc_rules.
     intros ?; apply nsteps_once, pure_head_step_pure_step;
       constructor; [solve_exec_safe | solve_exec_puredet].
 
+
   (** Helper Lemmas for weakestpre. *)
 
+  Global Instance pure_rec e1 e2 `{!AsVal e2} :
+      PureExec True 1 (App (Rec e1) e2) e1.[(Rec e1), e2 /].
+  Proof. solve_pure_exec. Qed.
+
+  Global Instance pure_fold e `{!AsVal e}:
+    PureExec True 1 (Unfold (Fold e)) e.
+  Proof. solve_pure_exec. Qed.
   Global Instance pure_lam e1 e2 `{!AsVal e2}:
     PureExec True 1 (App (Lam e1) e2) (e1.[e2 /]).
   Proof. solve_pure_exec. Qed.
@@ -51,5 +59,8 @@ Section stlc_rules.
   Global Instance pure_case_inr e0 e1 e2 `{!AsVal e0}:
     PureExec True 1 (Case (InjR e0) e1 e2) e2.[e0/].
   Proof. solve_pure_exec. Qed.
+
+
+
 
 End stlc_rules.
