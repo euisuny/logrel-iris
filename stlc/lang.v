@@ -175,3 +175,6 @@ Hint Extern 10 (IntoVal _ _) =>
 Hint Extern 5 (AsVal _) => eexists; eapply of_to_val; fast_done : typeclass_instances.
 Hint Extern 10 (AsVal _) =>
   eexists; rewrite /IntoVal; eapply of_to_val; rewrite /= !to_of_val /=; solve [ eauto ] : typeclass_instances.
+Local Hint Resolve language.val_irreducible : core.
+Local Hint Resolve to_of_val : core.
+Local Hint Unfold language.irreducible : core.
