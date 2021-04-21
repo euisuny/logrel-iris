@@ -2,31 +2,12 @@ Set Implicit Arguments.
 Require Import Omega Logic List Classes.Morphisms.
 Import List Notations.
 
-From cbpv Require Import syntax.
+From cbpv Require Import base syntax.
 
 Scheme value_ind_2 := Induction for value Sort Prop
   with comp_ind_2  := Induction for comp Sort Prop.
 
 Combined Scheme mutind_val_comp from value_ind_2, comp_ind_2.
-
-(* Moved from Base file *)
-Section Iter.
-  Variables (X: Type) (f: X -> X).
-
-  Fixpoint it n x : X :=
-    match n with
-    | 0 => x
-    | S n'=> f (it n' x)
-    end.
-
-  Fact it_shift n x :
-    f (it n x) = it n (f x).
-  Proof.
-    induction n; cbn; congruence.
-  Qed.
-
-End Iter.
-
 
 (** * CBPV Types *)
 (**
