@@ -1,3 +1,2 @@
 - commented out notations involving those bracket things in syntax.v
 - deleted hole case for ectx
-- ok that's it fuck
