@@ -57,14 +57,14 @@ Notation "A >+ B" := (plus step A B) (at level 60).
 (** ** Context Semantics *)
 (** Evaluation context *)
 Inductive vctx (t: bool) (m: nat): nat -> Type :=
-  | vctxHole : (if t then True else False) -> vctx t m m
+  (* | vctxHole : (if t then True else False) -> vctx t m m *)
   | vctxPairL n: vctx t m n -> value m -> vctx t m n
   | vctxPairR n : value m -> vctx t m n -> vctx t m n
   | vctxInj n : bool -> vctx t m n -> vctx t m n
   | vctxThunk n : cctx t m n -> vctx t m n
 
 with cctx (t: bool) (m: nat) : nat -> Type :=
-  | cctxHole: (if t then False else True) -> cctx t m m
+  (* | cctxHole: (if t then False else True) -> cctx t m m *)
   | cctxForce n : vctx t m n -> cctx t m n
   | cctxLambda n: cctx t (S m) n -> cctx t m n
   | cctxAppL n: cctx t m n -> value m -> cctx t m n
@@ -84,11 +84,11 @@ with cctx (t: bool) (m: nat) : nat -> Type :=
 
 Fixpoint fillv {m n: nat} {t: bool} (C: vctx t m n) : (if t then value n else comp n) -> value m :=
   match C in vctx _ _ n return (if t then value n else comp n) -> value m with
-  | vctxHole _ _ H =>
-    (match t return (if t then True else False) -> (if t then value m else comp m) -> value m with
-    | true => fun _ v' => v'
-    | false => fun f _ => match f with end
-    end) H
+  (* | vctxHole _ _ H => *)
+    (* (match t return (if t then True else False) -> (if t then value m else comp m) -> value m with *)
+    (* | true => fun _ v' => v' *)
+    (* | false => fun f _ => match f with end *)
+    (* end) H *)
   | vctxPairL C v => fun v' => pair (fillv C v') v
   | vctxPairR v C => fun v' => pair v (fillv C v')
   | vctxInj b C => fun v' => inj b (fillv C v')
@@ -96,11 +96,11 @@ Fixpoint fillv {m n: nat} {t: bool} (C: vctx t m n) : (if t then value n else co
   end
 with fillc {m n: nat} {t: bool} (C: cctx t m n) : (if t then value n else comp n) -> comp m :=
   match C in cctx _ _ n return (if t then value n else comp n) -> comp m with
-  | cctxHole _ _ H =>
-    (match t return (if t then False else True) -> (if t then value m else comp m) -> comp m with
-     | false => fun _ v' => v'
-     | true => fun f _ => match f with end
-     end) H
+  (* | cctxHole _ _ H => *)
+  (*   (match t return (if t then False else True) -> (if t then value m else comp m) -> comp m with *)
+  (*    | false => fun _ v' => v' *)
+  (*    | true => fun f _ => match f with end *)
+  (*    end) H *)
   | cctxForce C => fun v' => (fillv C v') !
   | cctxLambda C => fun v' => lambda (fillc C v')
   | cctxAppL C v => fun v' => (fillc C v') v
